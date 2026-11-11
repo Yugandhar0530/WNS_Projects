@@ -1,0 +1,10 @@
+streamlit>=1.28
+opencv-python-headless>=4.8
+pytesseract>=0.3.10
+pymupdf>=1.23
+numpy>=1.24
+langchain-ollama>=0.1
+langchain-core>=0.2
+
+# Optional — DOCX → PDF on Windows (needs Microsoft Word installed)
+docx2pdf>=0.1.8
