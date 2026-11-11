@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+yolov8n.pt
+*.mp4
+*.avi
+*.mov
+outputs/
+
+
