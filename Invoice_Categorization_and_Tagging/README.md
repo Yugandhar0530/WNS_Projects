@@ -33,24 +33,6 @@ System to categorize and tag invoices from PDF or image uploads. Text is extract
 }
 ```
 
-## Screenshots
-
-Add PNG files under `screenshots/` in this repo (paths below match the README). Capture these after you run the app locally:
-
-| File | What to capture |
-|------|-----------------|
-| `screenshots/ui-upload.png` | Main page with sidebar rules visible and an invoice file selected (preview showing). |
-| `screenshots/ocr-panel.png` | Same screen with **OCR text** expander open showing extracted text. |
-| `screenshots/results.png` | After **Run categorization**: merchant, total, department, category, tags, and download button. |
-| `screenshots/json-output.png` | Opened `invoice_classification.json` from download (or a snippet in an editor) showing structure. |
-
-### Suggested screenshot commentary (for your submission write-up)
-
-- **ui-upload.png**: Invoice uploaded; custom departments/categories in sidebar.
-- **ocr-panel.png**: OCR quality on a sample invoice; note if PDF is multi-page.
-- **results.png**: Model choice, assigned department/category, and generated tags.
-- **json-output.png**: Exported fields ready for import into a tracker or ERP.
-
 ## Prerequisites
 
 - Python 3.10+
@@ -62,7 +44,7 @@ Add PNG files under `screenshots/` in this repo (paths below match the README). 
 Install Tesseract, then set the path before starting the app (adjust if your install path differs):
 
 ```powershell
-$env:TESSERACT_PATH = "C:\Program Files\Tesseract-OCR\tesseract.exe"
+$env:TESSERACT_PATH = ""
 ```
 
 ## How to Run
