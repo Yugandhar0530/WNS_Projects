@@ -1,0 +1,7 @@
+streamlit==1.46.1
+langchain-ollama==1.1.0
+langchain-core==1.0.6
+pytesseract==0.3.13
+pillow==11.3.0
+pymupdf==1.25.3
+pydantic==2.11.7
