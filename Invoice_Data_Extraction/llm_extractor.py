@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -33,6 +34,21 @@ def strip_empty(value: Any) -> Any:
     return value
 
 
+def reconcile_currency(ocr_text: str, payload: dict[str, Any]) -> dict[str, Any]:
+    lower = ocr_text.lower()
+    has_dollar = "$" in ocr_text or "usd" in lower
+    has_euro = "€" in ocr_text or re.search(r"\beur\b", lower)
+
+    if not has_dollar and not has_euro:
+        return payload
+
+    if has_dollar and not has_euro:
+        payload["currency"] = "USD"
+    elif has_euro and not has_dollar:
+        payload["currency"] = "EUR"
+    return payload
+
+
 def build_extractor(model: str) -> ChatOllama:
     if model not in SUPPORTED_MODELS:
         raise ValueError(f"Unsupported model: {model}")
@@ -56,6 +72,7 @@ You extract invoice data into JSON. Use only information present in the OCR text
 Do not invent values. If a field is missing, omit it or use null.
 Normalize dates to YYYY-MM-DD when possible.
 Items is a list of objects with description, quantity, unit_price, total_price when available.
+For currency: use ISO codes only when supported by the OCR text ($ or USD means USD; € or EUR means EUR). Never substitute EUR when the document shows dollars.
 Rule-based hints may be correct but must be verified against the OCR text; discard hints that conflict.
 """.strip(),
             ),
@@ -70,6 +87,9 @@ Rule-based hints may be correct but must be verified against the OCR text; disca
     try:
         response = chain.invoke({"text": ocr_text, "hints": hints_block})
         parsed = json.loads(response.content)
-        return strip_empty(parsed)
+        cleaned = strip_empty(parsed) or {}
+        if isinstance(cleaned, dict):
+            cleaned = reconcile_currency(ocr_text, cleaned)
+        return cleaned
     except Exception:
         return None

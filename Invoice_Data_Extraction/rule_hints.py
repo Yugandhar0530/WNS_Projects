@@ -19,7 +19,9 @@ TOTAL_PATTERNS = (
     r"(?i)\btotal\b[^\d]{0,20}\$?\s*([\d,]+\.?\d*)",
 )
 
-CURRENCY_PATTERN = r"(?i)\b(USD|EUR|GBP|INR|AUD|CAD)\b|(?<!\w)(\$|€|£|₹)(?!\w)"
+CURRENCY_CODE_PATTERN = re.compile(
+    r"(?i)\b(USD|EUR|GBP|INR|AUD|CAD)\b",
+)
 
 VENDOR_LINE_PATTERN = re.compile(
     r"^[\w\s&.,'-]{3,80}$",
@@ -32,6 +34,34 @@ def _first_match(text: str, patterns: tuple[str, ...]) -> str | None:
         match = re.search(pattern, text)
         if match:
             return match.group(1).strip()
+    return None
+
+
+def _detect_currency(text: str) -> str | None:
+    dollars = text.count("$")
+    euros = text.count("€")
+    pounds = text.count("£")
+    rupees = text.count("₹")
+
+    if dollars > euros and dollars > 0:
+        return "USD"
+    if euros > dollars and euros > 0:
+        return "EUR"
+    if pounds > 0 and pounds >= max(dollars, euros):
+        return "GBP"
+    if rupees > 0:
+        return "INR"
+
+    explicit = list(CURRENCY_CODE_PATTERN.finditer(text))
+    if explicit:
+        counts: dict[str, int] = {}
+        for match in explicit:
+            code = match.group(1).upper()
+            counts[code] = counts.get(code, 0) + 1
+        return max(counts, key=counts.get)
+
+    if dollars > 0:
+        return "USD"
     return None
 
 
@@ -63,11 +93,9 @@ def derive_rule_hints(ocr_text: str) -> dict[str, Any]:
     if total_val:
         hints["total_amount"] = total_val.replace(",", "")
 
-    currency_match = re.search(CURRENCY_PATTERN, ocr_text)
-    if currency_match:
-        token = currency_match.group(1) or currency_match.group(2)
-        symbol_map = {"$": "USD", "€": "EUR", "£": "GBP", "₹": "INR"}
-        hints["currency"] = symbol_map.get(token, token.upper())
+    currency = _detect_currency(ocr_text)
+    if currency:
+        hints["currency"] = currency
 
     vendor = _guess_vendor(ocr_text)
     if vendor:
