@@ -2,106 +2,98 @@
 
 Collection of applications for computer vision, NLP, REST APIs, and GenAI development. Each folder is a self-contained application with its own `README.md`, pinned `requirements.txt`, run instructions, screenshots, and test guidance.
 
+
 **GitHub:** [https://github.com/Yugandhar0530/WNS_Projects](https://github.com/Yugandhar0530/WNS_Projects)
-
-## Coverage review
-
-Compared with the reference `Bhanu_WNS_Projects` tree, this repository includes **every project**. Folder names differ in three places; functionality and scope are preserved.
-
-| Reference folder (`Bhanu_WNS_Projects`) | This repository (`WNS_Projects`) | Status |
-| --- | --- | --- |
-| `Text_Generator` | `Text_Generator` | Included |
-| `Sentimental_Analysis` | `Sentiment_Analysis_API` | Included (FastAPI REST variant) |
-| `Real_Time_Object_Detection` | `Real_Time_Object_Detection` | Included |
-| `Python_Website_Blocking` | `Python_Website_Blocker` | Included |
-| `Invoice_data_extraction` | `Invoice_Data_Extraction` | Included (modular OCR + rules + LLM) |
-| `Invoice_Language_Translation` | `Invoice_Language_Translation` | Included |
-| `Invoice_Categorization_and_Tagging` | `Invoice_Categorization_and_Tagging` | Included |
-| `Invoice_Bounding_Box_Drawing` | `Invoice_Bounding_Box_Drawing` | Included |
-| `Intelligent_Traffic_Monitoring_System` | `Intelligent_Traffic_Monitoring_System` | Included |
-
-**Missing from this repo:** none.
 
 ## Projects
 
-### 1. [Intelligent Traffic Monitoring System](Intelligent_Traffic_Monitoring_System/)
+### 1. 🚗 [Intelligent Traffic Monitoring System](Intelligent_Traffic_Monitoring_System/)
 
 Offline or webcam video processing with YOLOv8. Detects people and vehicle classes, draws annotated output, and summarizes per-class counts.
 
 | | |
 | --- | --- |
+| **Use case** | Traffic flow review, vehicle and pedestrian counting on recorded CCTV or dashcam footage |
 | **Stack** | YOLOv8, OpenCV, Python |
 | **Run** | See project README (`python app.py` with CLI options) |
 
-### 2. [Real-Time Object Detection](Real_Time_Object_Detection/)
+### 2. 📹 [Real-Time Object Detection](Real_Time_Object_Detection/)
 
 Flask app streaming live webcam frames with YOLOv8 detections to the browser (MJPEG).
 
 | | |
 | --- | --- |
+| **Use case** | Live workspace or entryway monitoring, quick object-label demos in the browser |
 | **Stack** | YOLOv8, Flask, OpenCV |
 | **Run** | `python app.py` |
 
-### 3. [Invoice Data Extraction](Invoice_Data_Extraction/)
+### 3. 🧾 [Invoice Data Extraction](Invoice_Data_Extraction/)
 
 Streamlit pipeline: PDF/image upload, Tesseract OCR, regex hints, LangChain + Ollama JSON extraction, download and review expanders.
 
 | | |
 | --- | --- |
+| **Use case** | Accounts payable automation, turning scanned invoices into structured JSON for ERP or spreadsheets |
 | **Stack** | Tesseract, PyMuPDF, LangChain, Ollama, Streamlit |
 | **Run** | `streamlit run app.py` |
 
-### 4. [Invoice Language Translation](Invoice_Language_Translation/)
+### 4. 🌍 [Invoice Language Translation](Invoice_Language_Translation/)
 
 Extracts invoice text from PDFs or images and translates across languages (offline translation stack per project README).
 
 | | |
 | --- | --- |
+| **Use case** | Cross-border vendors — read foreign-language invoices without sending documents to a cloud translator |
 | **Stack** | OCR, Argos Translate, Streamlit |
 | **Run** | `streamlit run app.py` |
 
-### 5. [Invoice Bounding Box Drawing](Invoice_Bounding_Box_Drawing/)
+### 5. 📦 [Invoice Bounding Box Drawing](Invoice_Bounding_Box_Drawing/)
 
 OCR plus LLM-assisted field discovery; draws bounding boxes on invoice images for verification and demos.
 
 | | |
 | --- | --- |
+| **Use case** | Audit and QA — visually confirm which regions were read for each invoice field |
 | **Stack** | Tesseract, LangChain, Ollama, OpenCV, Streamlit |
 | **Run** | `streamlit run app.py` |
 
-### 6. [Invoice Categorization and Tagging](Invoice_Categorization_and_Tagging/)
+### 6. 🏷️ [Invoice Categorization and Tagging](Invoice_Categorization_and_Tagging/)
 
 Classifies invoices into departments, expense categories, and tags from OCR text via local LLM.
 
 | | |
 | --- | --- |
+| **Use case** | Expense routing, cost-center assignment, and searchable tags for finance workflows |
 | **Stack** | Tesseract, LangChain, Ollama, Streamlit |
 | **Run** | `streamlit run app.py` |
 
-### 7. [Text Generator](Text_Generator/)
+### 7. ✍️ [Text Generator](Text_Generator/)
 
 GenAI text studio: assistant chat (streaming), short stories, and topic jokes using Ollama and LangChain.
 
 | | |
 | --- | --- |
+| **Use case** | Local GenAI demos — draft copy, playful content, or a sandbox chat without external APIs |
 | **Stack** | LangChain, Ollama, Streamlit |
 | **Run** | `streamlit run app.py` |
 
-### 8. [Sentiment Analysis API](Sentiment_Analysis_API/)
+### 8. 💭 [Sentiment Analysis API](Sentiment_Analysis_API/)
 
 REST API for positive / negative / neutral scoring with confidence; Swagger at `/docs`.
 
 | | |
 | --- | --- |
+| **Use case** | Customer feedback triage, review scoring, and batch sentiment before reporting pipelines |
 | **Stack** | FastAPI, TextBlob, Uvicorn |
 | **Run** | `uvicorn app:app --reload` |
 
-### 9. [Python Website Blocker](Python_Website_Blocker/)
+### 9. 🔒 [Python Website Blocker](Python_Website_Blocker/)
 
-Streamlit tool to block domains via the hosts file, with pattern rules and optional page scanning (admin rights on Windows).
+Streamlit tool to block domains via the hosts file, with pattern rules and optional page scraping (admin rights on Windows).
 
 | | |
 | --- | --- |
+| **Use case** | Productivity and policy control — block distraction sites or bulk domains on a single Windows PC |
 | **Stack** | Streamlit, hosts-file edits, requests, BeautifulSoup |
 | **Run** | `streamlit run app.py` (elevated when blocking) |
 
